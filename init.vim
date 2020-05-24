@@ -1,6 +1,7 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'Valloric/YouCompleteMe', { 'do': 'python3 install.py --clangd-completer' }
+"Plug 'Valloric/YouCompleteMe', { 'do': 'python3 install.py --clangd-completer' }
+"Plug 'autozimu/LanguageClient-neovim',{'do': 'UpdateRemotePlugins'}
 Plug 'w0rp/ale'
 Plug 'rhysd/vim-clang-format'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
@@ -16,6 +17,7 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'w0ng/vim-hybrid'
 Plug 'aurieh/discord.nvim', { 'do': ':UpdateRemotePlugins'}
 Plug 'junegunn/seoul256.vim'
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 set path+=**
@@ -42,6 +44,10 @@ if &encoding != 'utf-8'
 endif
 
 let mapleader = ','
+map - <C-w>-
+map + <C-w>+
+map <M-<> <C-w><
+map <M->> <C-w>>
 noremap <C-c> "+y
 noremap <C-v> "+p
 noremap <C-x> "+d
@@ -67,7 +73,7 @@ set smarttab
 set expandtab
 
 let g:airline_theme='bubblegum'
-
+set nu
 set ignorecase
 set incsearch
 set smartcase
@@ -88,15 +94,23 @@ let g:ycm_confirm_extra_conf = 0
 let g:ale_completion_enabled = 1
 let g:ale_cpp_clang_executable = 'clang++'
 let g:ale_linters = {
-            \   'cpp': ['clang']
+            \   'cpp': ['clang'],
+            \   'rust': ['analyzer'],
             \}
-let g:ale_cpp_clang_options = '-std=c++17 -O0 -Wextra -Wall -Wpedantic -I /usr/include/llvm -I /usr/include/llvm-c -I /usr/include/clang -I /usr/include/clang-c'
+let g:ale_cpp_clang_options = '-std=c++17 -O0 -Wextra -Wall -Wpedantic'
 function! WindowNumber(...) 
         let builder = a:1
         let context = a:2
         call builder.add_section('airline_b','%{tabpagewinnr(tabpagenr()) }')
         return 0
 endfunction
+
+autocmd BufReadPost *.rs setlocal filetype=rust
+
+set hidden
+"let g:LanguageClient_serverCommands = {
+   " \'rust': ['rustup','run','nightly','rls'],
+   " \ }
 
 call airline#add_statusline_func('WindowNumber')
 call airline#add_inactive_statusline_func('WindowNumber')
