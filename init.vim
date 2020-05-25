@@ -2,7 +2,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 "Plug 'Valloric/YouCompleteMe', { 'do': 'python3 install.py --clangd-completer' }
 "Plug 'autozimu/LanguageClient-neovim',{'do': 'UpdateRemotePlugins'}
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'rhysd/vim-clang-format'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'scrooloose/nerdcommenter'
